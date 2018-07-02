@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.way.dao.UserDao">
+	<resultMap type="com.way.dto.User" id="BaseResultMap">
+		<id column="id" property="id" />
+		<result column="lan_id" property="lanId" />
+		<result column="user_name" property="userName" />
+		<result column="password" property="password" />
+		<result column="status" property="status" />
+		<result column="is_super_admin" property="isSuperAdmin" />
+		<result column="unlock_time" property="unlockTime" />
+		<result column="lock_flag" property="lockFlag" />
+	</resultMap>
+
+	<!-- <insert id="insertUser"> INSERT INTO [dbo].[twc0_SYS_USER]( [lan_id], 
+		[user_name], [password], [status], [is_super_admin], [unlock_time], [lock_flag]) 
+		VALUES('#{lanId}', '#{userName}', '#{password}', '#{status}', '#{isSuperAdmin}', 
+		#{unlockTime}, '#{lockFlag}') GO </insert> -->
+
+
+	<insert id="insertUser"  keyProperty="id" useGeneratedKeys="true" keyColumn="id" parameterType="com.way.dto.User"  >
+		<!-- <insert id="insertUser" useGeneratedKeys="true" keyProperty="id" keyColumn="id"> -->
+		INSERT INTO [dbo].[twc0_SYS_USER](
+		<trim suffixOverrides=",">
+		<if test="lanId!=null">lan_id,</if> 
+		<if test="userName!=null">user_name,</if>
+		<if test="password!=null">password,</if>
+		<if test="status!=null">status,</if>
+		<if test="isSuperAdmin!=null">is_super_admin,</if>
+		<if test="unlockTime!=null">unlock_time,</if>
+		<if test="lockFlag!=null">lock_flag,</if>
+		</trim>
+		)
+		VALUES(
+		<trim suffixOverrides=",">
+			<if test="lanId!=null">#{lanId},</if>
+			<if test="userName!=null">#{userName},</if>
+			<if test="password!=null">#{password},</if>
+			<if test="status!=null">#{status},</if>
+			<if test="isSuperAdmin!=null">#{isSuperAdmin},</if>
+			<if test="unlockTime!=null">#{unlockTime},</if>
+			<if test="lockFlag!=null">#{lockFlag},</if>
+		</trim>
+
+		);
+	</insert>
+
+
+	<delete id="deleteUserByUserName">
+		DELETE FROM [dbo].[twc0_SYS_USER] WHERE [user_name] =
+		#{userName};
+	</delete>
+
+
+	<delete id="deleteUserByPrimaryKey">
+		DELETE FROM [dbo].[twc0_SYS_USER] WHERE [id] =
+		#{id};
+	</delete>
+
+	<update id="updateUserByPrimaryKey">
+		UPDATE [dbo].[twc0_SYS_USER]
+		<!-- 动态sql 因为不更新的字段，会被传递null到SQL中，引起异常。 这时就需要进行动态SQL拼接，如下，使用trim就是为了删掉最后字段的“,”。 
+			主要不用单独写SET了，因为set被包含在trim中了： -->
+		<trim prefix="set" suffixOverrides=",">
+			<if test="lanId!=null">[lan_id]=#{lanId},</if>
+			<if test="userName!=null">[user_name]=#{userName},</if>
+			<if test="password!=null">[password]=#{password},</if>
+			<if test="status!=null">[status]=#{status},</if>
+			<if test="isSuperAdmin!=null">[is_super_admin]=#{isSuperAdmin},</if>
+			<if test="unlockTime!=null">[unlock_time]=#{unlockTime},</if>
+			<if test="lockFlag!=null">[lock_flag]=#{lockFlag},</if>
+
+		</trim>
+		WHERE [id]=#{id};
+	</update>
+
+
+	<select id="queryAllUsers" resultMap="BaseResultMap">
+		SELECT * FROM
+		[dbo].[twc0_SYS_USER];
+	</select>
+
+
+
+	<select id="queryUserByPrimaryKey" resultMap="BaseResultMap">
+		SELECT * FROM
+		[dbo].[twc0_SYS_USER] WHERE [id] = #{id};
+	</select>
+
+
+	<select id="queryUserByUserName" resultMap="BaseResultMap">
+		SELECT *
+		FROM [dbo].[twc0_SYS_USER] WHERE [user_name] = #{userName};
+	</select>
+
+
+	<select id="queryAllUsersByPage" resultMap="BaseResultMap">
+		<!-- sqlserver 的分页关键字 top not in -->
+		select top(#{pageSize}) * from [dbo].[twc0_SYS_USER]
+		where [id] not in (
+		select top (#{startPos}) [id] from [dbo].[twc0_SYS_USER]
+		);
+	</select>
+
+
+	<select id="queryUserRecordCounts" resultType="java.lang.Integer">
+		SELECT count([id])
+		FROM [dbo].[twc0_SYS_USER]
+	</select>
+</mapper>

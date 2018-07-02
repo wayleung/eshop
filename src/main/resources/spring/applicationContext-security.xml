@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:security="http://www.springframework.org/schema/security"
+    xmlns:oauth2="http://www.springframework.org/schema/security/oauth2"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans 
+        http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+        http://www.springframework.org/schema/security
+        http://www.springframework.org/schema/security/spring-security-3.2.xsd
+        http://www.springframework.org/schema/security/oauth2  
+        http://www.springframework.org/schema/security/spring-security-oauth2.xsd">
+     
+    <bean id="accessDecisionManager" class="org.springframework.security.access.vote.UnanimousBased">
+        <constructor-arg>
+            <list>
+                <bean class="org.springframework.security.oauth2.provider.vote.ScopeVoter"/>
+                <bean class="org.springframework.security.access.vote.RoleVoter"/>
+                <bean class="org.springframework.security.access.vote.AuthenticatedVoter"/>
+            </list>
+        </constructor-arg>
+    </bean>
+    
+    <bean id="filterSecurityInterceptor" class="org.springframework.security.web.access.intercept.FilterSecurityInterceptor">
+    	<property name="accessDecisionManager" ref="accessDecisionManager" />
+    	<property name="authenticationManager" ref="authenticationManager" />
+		<property name="securityMetadataSource" ref="securityMetadataSource"/>
+   </bean>
+   
+   <bean id="securityMetadataSource" class="com.aia.mypage.framework.MypageFilterInvocationSecurityMetadataSource" init-method="initRequestMap">
+    </bean>
+    
+    <!--  过滤不被拦截的请求  -->
+    <security:http pattern="/css/**" security="none" />
+    <security:http pattern="/lib/**" security="none" />
+    <security:http pattern="/img/**" security="none" />
+    <security:http pattern="/app/**/*.js" security="none" />
+    <security:http pattern="/**/401.html" security="none" />
+    <security:http pattern="/login.jsp" security="none" />
+    <security:http pattern="/login.jsp/*" security="none" />
+    
+    <bean id="accessDeniedHandler" class="com.aia.mypage.framework.MyPageAccessDeniedHandler" />
+    
+    <!-- <security:http pattern="*/**/*.html">
+    	<security:http-basic/>
+        <security:custom-filter ref="filterSecurityInterceptor" before="FILTER_SECURITY_INTERCEPTOR"/>
+        <security:access-denied-handler ref="accessDeniedHandler" />
+    </security:http> -->
+ 
+    <security:http pattern="/**">
+
+        <security:intercept-url pattern="/login.jsp*"  access="IS_AUTHENTICATED_ANONYMOUSLY" />
+        
+        <security:custom-filter ref="filterSecurityInterceptor" before="FILTER_SECURITY_INTERCEPTOR"/>
+        
+        <security:form-login login-page="/login.jsp" authentication-failure-url="/login.jsp?login_error=1" 
+        		default-target-url="/" />
+        
+        <security:logout logout-url="/logout" logout-success-url="/login.jsp" />
+
+		<security:access-denied-handler ref="accessDeniedHandler" />
+    </security:http>
+ 
+    <security:authentication-manager alias="authenticationManager">
+        <security:authentication-provider ref="myPageAuthenticationProvider"></security:authentication-provider>
+    </security:authentication-manager>
+    
+    
+    <bean id="myPageAuthenticationProvider" class="com.aia.mypage.framework.MyPageAuthenticationProvider">
+		<property name="userDetailsService" ref="userService" />
+		<property name="passwordEncoder" ref="standardPasswordEncoder" />
+	</bean>
+	<bean id="userService" class="com.aia.mypage.framework.MyPageUserDetailsService" />
+        
+    
+
+</beans>
