@@ -38,7 +38,13 @@ INSERT INTO [dbo].[twc0_SYS_USER]([id], [lan_id], [user_name], [password], [stat
   VALUES(23, NULL, N'aaaa', N'3f21a8490cef2bfb60a9702e9d2ddb7a805c9bd1a263557dfd51a7d0e9dfa93e', 'A', 'N', NULL, NULL)
 GO
 INSERT INTO [dbo].[twc0_SYS_USER]([id], [lan_id], [user_name], [password], [status], [is_super_admin], [unlock_time], [lock_flag])
-  VALUES(25, N'asnpht6', N'test', N'test', 'D', 'N', '20180612 16:49:53.0', 'N')
+  VALUES(25, N'asnpht6', N'test', N'test', 'A', 'N', '20180612 16:49:53.0', 'admin;user')
+GO
+INSERT INTO [dbo].[twc0_SYS_USER]([id], [lan_id], [user_name], [password], [status], [is_super_admin], [unlock_time], [lock_flag])
+  VALUES(2055, NULL, N'user1', N'user1', 'A', 'Y', NULL, NULL)
+GO
+INSERT INTO [dbo].[twc0_SYS_USER]([id], [lan_id], [user_name], [password], [status], [is_super_admin], [unlock_time], [lock_flag])
+  VALUES(2056, NULL, N'test01', N'test01', 'A', 'N', NULL, NULL)
 GO
 SET IDENTITY_INSERT [dbo].[twc0_SYS_USER] OFF
 
