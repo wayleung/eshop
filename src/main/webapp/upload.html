@@ -85,12 +85,13 @@
 AdminUtil.ajax("/file/getDownloadList","GET","json",AdminUtil.formContentType,null,false,function(data){	
 			console.log(data.datas);
 			for(i=0;i<data.datas.length;i++){
-				$('#fileNameList').append('<span><a href="/down/"+data.datas[i]>'+data.datas[i]+'</a></span><br>');
+				$('#fileNameList').append('<span><a href=\"/file/down?file='+data.datas[i]+'\">'+data.datas[i]+'</a></span><br>');
 			}
 			
 			
 		}, function(data){
 			console.log(data.msg);
+			alert(data.msg);
 			return
 		});
 
