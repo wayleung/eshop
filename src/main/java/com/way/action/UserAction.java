@@ -1,5 +1,7 @@
 package com.way.action;
 
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.shiro.SecurityUtils;
@@ -25,10 +27,16 @@ import com.way.dto.User;
 import com.way.exception.ErrorCodeConstant;
 import com.way.service.UserService;
 import com.way.service.impl.UserServiceImpl;
+import com.way.utils.freemarker.Case;
+import com.way.utils.freemarker.Detail;
+import com.way.utils.freemarker.FreemarkerUtil;
+import com.way.utils.freemarker.Summary;
 import com.way.utils.redis.cache.RedisCache;
 import com.way.vo.Page;
 import com.way.vo.PageResult;
 import com.way.vo.Result;
+
+import freemarker.template.TemplateException;
 
 @RequestMapping("user")
 @Controller
@@ -42,7 +50,7 @@ public class UserAction extends BaseAction {
 
 	@ResponseBody
 	@RequestMapping(value = "/userLogin", method = RequestMethod.POST)
-	Result login(String userName, String password) {
+	public Result login(String userName, String password) {
 
 		// shiro subject主体
 		Subject subject = SecurityUtils.getSubject();
@@ -101,7 +109,7 @@ public class UserAction extends BaseAction {
 
 	@ResponseBody
 	@RequestMapping(value = "/deleteUserByUserName", method = RequestMethod.POST)
-	Result deleteUserByUserName(String userName) {
+	public Result deleteUserByUserName(String userName) {
 		Integer deleteUserByUserName = userService.deleteUserByUserName(userName);
 		if (deleteUserByUserName != 0) {
 			return Result.trueResult(ErrorCodeConstant.E00001.getMessage()+", 改动的行数"+deleteUserByUserName,
@@ -114,7 +122,7 @@ public class UserAction extends BaseAction {
 
 	@ResponseBody
 	@RequestMapping(value = "/insertUser", method = RequestMethod.POST)
-	Result insertUser(User user) {
+	public Result insertUser(User user) {
 		Integer insert = userService.insertUser(user);
 		/*if (insert != 0) {*/
 		//Mybatis设置了返回自增主键
@@ -130,7 +138,7 @@ public class UserAction extends BaseAction {
 
 	@ResponseBody
 	@RequestMapping(value = "/deleteUserByPrimaryKey", method = RequestMethod.POST)
-	Result deleteUserByPrimaryKey(Integer id) {
+	public Result deleteUserByPrimaryKey(Integer id) {
 		Integer deletByPrimaryKey = userService.deleteUserByPrimaryKey(id);
 		if (deletByPrimaryKey != 0) {
 			return Result.trueResult(ErrorCodeConstant.E00001.getMessage()+", 改动的行数"+deletByPrimaryKey,
@@ -143,7 +151,7 @@ public class UserAction extends BaseAction {
 
 	@ResponseBody
 	@RequestMapping(value = "/updateUserByPrimaryKey", method = RequestMethod.POST)
-	Result updateUserByPrimaryKey(User user) {
+	public Result updateUserByPrimaryKey(User user) {
 		Integer updateByPrimaryKey = userService.updateUserByPrimaryKey(user);
 		if (updateByPrimaryKey != 0) {
 			return Result.trueResult(ErrorCodeConstant.E00001.getMessage()+", 改动的行数"+updateByPrimaryKey,
@@ -156,7 +164,7 @@ public class UserAction extends BaseAction {
 
 	@ResponseBody
 	@RequestMapping(value = "/queryAllUsers", method = RequestMethod.GET)
-	Result queryAllUsers() {
+	public Result queryAllUsers() {
 		List<User> queryAll = userService.queryAllUsers();
 		if (queryAll != null && queryAll.size() > 0) {
 			return new Result(true, queryAll,
@@ -171,7 +179,7 @@ public class UserAction extends BaseAction {
 
 	@ResponseBody
 	@RequestMapping(value = "/queryAllUsersByPage", method = RequestMethod.POST)
-	Result queryAllUsersByPage(Page page) {
+	public Result queryAllUsersByPage(Page page) {
 		PageResult<User> queryAllByPage = userService.queryAllUsersByPage(page);
 		if (queryAllByPage != null && queryAllByPage.getData() != null
 				&& queryAllByPage.getData().size() > 0) {
@@ -188,7 +196,7 @@ public class UserAction extends BaseAction {
 
 	@ResponseBody
 	@RequestMapping(value = "/queryUserByPrimaryKey", method = RequestMethod.GET)
-	Result queryUserByPrimaryKey(Integer id) {
+	public Result queryUserByPrimaryKey(Integer id) {
 		User queryByPrimaryKey = userService.queryUserByPrimaryKey(id);
 		if (queryByPrimaryKey != null) {
 			return new Result(true, queryByPrimaryKey,
@@ -203,7 +211,7 @@ public class UserAction extends BaseAction {
 
 	@ResponseBody
 	@RequestMapping(value = "/queryUserByUserName", method = RequestMethod.GET)
-	Result queryUserByUserName(String userName) {
+	public Result queryUserByUserName(String userName) {
 		User queryByUserName = userService.queryUserByUserName(userName);
 		if (queryByUserName != null) {
 			return new Result(true, queryByUserName,
@@ -219,7 +227,7 @@ public class UserAction extends BaseAction {
 
 	@ResponseBody
 	@RequestMapping(value = "/users", method = RequestMethod.GET)
-	Result users() {
+	public Result users() {
 		List<User> queryAll = userService.queryAllUsers();
 		if (queryAll != null && queryAll.size() > 0) {
 			return new Result(true, queryAll,
@@ -236,7 +244,7 @@ public class UserAction extends BaseAction {
 	
 	@ResponseBody
 	@RequestMapping(value = "/users", method = RequestMethod.POST)
-	Result users_insert(User user) {
+	public Result users_insert(User user) {
 		Integer insert = userService.insertUser(user);
 		/*if (insert != 0) {*/
 		//Mybatis设置了返回自增主键
@@ -254,7 +262,7 @@ public class UserAction extends BaseAction {
 	
 	@ResponseBody
 	@RequestMapping(value = "/users/{id}", method = RequestMethod.GET)
-	Result users_id(@PathVariable("id") Integer id) {
+	public Result users_id(@PathVariable("id") Integer id) {
 		User queryByPrimaryKey = userService.queryUserByPrimaryKey(id);
 		if (queryByPrimaryKey != null) {
 			return new Result(true, queryByPrimaryKey,
@@ -270,7 +278,7 @@ public class UserAction extends BaseAction {
 	
 	@ResponseBody
 	@RequestMapping(value = "/users/{id}", method = RequestMethod.DELETE)
-	Result users_deleteid(@PathVariable("id") Integer id) {
+	public Result users_deleteid(@PathVariable("id") Integer id) {
 		Integer deletByPrimaryKey = userService.deleteUserByPrimaryKey(id);
 		if (deletByPrimaryKey != 0) {
 			return Result.trueResult(ErrorCodeConstant.E00001.getMessage()+", 改动的行数"+deletByPrimaryKey,
@@ -284,7 +292,7 @@ public class UserAction extends BaseAction {
 	
 	@ResponseBody
 	@RequestMapping(value = "/users/", method = RequestMethod.PUT)
-	Result users_updateid(User user) {
+	public Result users_updateid(User user) {
 		Integer updateByPrimaryKey = userService.updateUserByPrimaryKey(user);
 		if (updateByPrimaryKey != 0) {
 			return Result.trueResult(ErrorCodeConstant.E00001.getMessage()+", 改动的行数"+updateByPrimaryKey,
@@ -298,7 +306,7 @@ public class UserAction extends BaseAction {
 
 	@ResponseBody
 	@RequestMapping(value = "/testTransaction", method = RequestMethod.POST)
-	Result testTransaction() {
+	public Result testTransaction() {
 /*		User user1 = new User();
 		user1.setUserName("user1");
 		user1.setPassword("user1");
@@ -327,6 +335,52 @@ public class UserAction extends BaseAction {
 		
 		userService.testTransaction();
 		return Result.trueResult("testTransaction", "1");
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/freemarker", method = RequestMethod.GET)
+	public Result freemarker(){
+		Summary summary = new Summary("2018-07-04 13:42:00", "2018-07-04 13:42:00", "2", "6", "6", "6","6", "0.6", "0.7");
+		
+		Case google = new Case("google", "SUCCESS", "20s", "0", "10");
+		Case yahoo = new Case("yahoo", "SUCCESS", "20s", "0", "10");
+		Case sina = new Case("sina", "Fail", "20s", "0", "10");
+		Case alibaba = new Case("alibaba", "Fail", "20s", "0", "10");	
+		List<Case> cases = new ArrayList<Case>();
+		cases.add(google);
+		cases.add(yahoo);
+		cases.add(sina);
+		cases.add(alibaba);
+		
+		summary.setCases(cases);
+		
+		
+		List<Detail> details = new ArrayList<Detail>();
+		details.add(new Detail("1","comment","description", "message", "SUCCESS"));
+		details.add(new Detail("2","comment2","description2", "message2", "SUCCESS"));
+		
+		google.setDetails(details);
+		yahoo.setDetails(details);
+		sina.setDetails(details);
+		alibaba.setDetails(details);
+		
+/*		generateCaseHtml(null,google);
+		generateCaseHtml(null,yahoo);
+		generateCaseHtml(null,sina);
+		generateCaseHtml(null,alibaba);
+		
+		generateSummaryHtml(null,summary);*/
+		
+		try {
+			FreemarkerUtil.generateSummaryAndCaseHtml(null,summary);
+		} catch (IOException | TemplateException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return Result.falseResult(e.getMessage(),
+					ErrorCodeConstant.E00000.getCode());
+		}
+		
+		return Result.trueResult("success !", "1");
 	}
 
 }
