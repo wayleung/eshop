@@ -10,6 +10,9 @@ D:\workspace-mars\eshop\src\main\java\com\way\utils\excel\ExcelBean.java
 D:\workspace-mars\eshop\src\main\java\com\way\action\BaseAction.java
 D:\workspace-mars\eshop\src\main\java\com\way\utils\md5\MD5Util.java
 D:\workspace-mars\eshop\src\main\java\com\way\utils\md5\MD5Test.java
+D:\workspace-mars\eshop\src\main\java\com\way\utils\freemarker\FreemarkerUtil.java
+D:\workspace-mars\eshop\src\main\java\com\way\utils\email\Base64Util.java
+D:\workspace-mars\eshop\src\main\java\com\way\utils\email\EmailUtil.java
 D:\workspace-mars\eshop\src\main\java\com\way\utils\redis\cache\RedisCache.java
 D:\workspace-mars\eshop\src\main\java\com\way\vo\Page.java
 D:\workspace-mars\eshop\src\main\java\com\way\utils\redis\JedisUtil.java
@@ -20,12 +23,17 @@ D:\workspace-mars\eshop\src\main\java\com\way\service\ExcelService.java
 D:\workspace-mars\eshop\src\main\java\com\way\service\UserService.java
 D:\workspace-mars\eshop\src\main\java\com\way\utils\http\HttpClientUtilTest.java
 D:\workspace-mars\eshop\src\main\java\com\way\utils\http\HttpService.java
+D:\workspace-mars\eshop\src\main\java\com\way\utils\freemarker\Detail.java
 D:\workspace-mars\eshop\src\main\java\com\way\aop\LogAspect.java
 D:\workspace-mars\eshop\src\main\java\com\way\utils\excel\ExcelUtil.java
 D:\workspace-mars\eshop\src\main\java\com\way\dto\User.java
 D:\workspace-mars\eshop\src\main\java\com\way\action\FileAction.java
 D:\workspace-mars\eshop\src\main\java\com\way\exception\SystemException.java
 D:\workspace-mars\eshop\src\main\java\com\way\utils\redis\cache\MethodCacheInterceptor.java
+D:\workspace-mars\eshop\src\main\java\com\way\utils\email\Html2Text.java
+D:\workspace-mars\eshop\src\main\java\com\way\utils\freemarker\Case.java
 D:\workspace-mars\eshop\src\main\java\com\way\shiro\CustomRealm.java
+D:\workspace-mars\eshop\src\main\java\com\way\utils\freemarker\Summary.java
+D:\workspace-mars\eshop\src\main\java\com\way\utils\email\Email.java
 D:\workspace-mars\eshop\src\main\java\com\way\service\impl\UserServiceImpl.java
 D:\workspace-mars\eshop\src\main\java\com\way\utils\http\HttpClientTest.java
