@@ -93,7 +93,9 @@
 
 
 	
-
+		<!-- 跨域 -->
+	
+	<mvc:cors> <mvc:mapping path="/**" /> </mvc:cors>
 
 
 
