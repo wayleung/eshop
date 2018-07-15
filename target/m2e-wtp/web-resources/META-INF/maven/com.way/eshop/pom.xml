@@ -589,6 +589,7 @@
 				<configuration>
 					<!-- http://maven.apache.org/plugins/maven-war-plugin/ -->
 					<packagingExcludes>WEB-INF/web.xml</packagingExcludes>
+                  	<failOnMissingWebXml>false</failOnMissingWebXml>  
 				</configuration>
 			</plugin>
 
@@ -613,6 +614,93 @@
 				<version>3.0-r1655215</version> <configuration> <port>80</port> <path>/</path> 
 				<uriEncoding>UTF-8</uriEncoding> <finalName>eshop</finalName> <server>tomcat7</server> 
 				</configuration> </plugin> -->
+				
+				
+				
+				
+	<!-- 打jar包必备 -->
+	
+<!-- 	        <plugin>  
+            <groupId>org.apache.maven.plugins</groupId>  
+            <artifactId>maven-jar-plugin</artifactId>  
+            <version>2.6</version>  
+            <configuration>  
+                <archive>  
+                    <manifest>  
+                        <addClasspath>true</addClasspath>  
+                        <classpathPrefix>lib/</classpathPrefix>  
+                        <mainClass>com.aia.action.MainEngine</mainClass>  
+                    </manifest>  
+                </archive>  
+            </configuration>  
+        </plugin>  
+        <plugin>  
+            <groupId>org.apache.maven.plugins</groupId>  
+            <artifactId>maven-dependency-plugin</artifactId>  
+            <version>2.10</version>  
+            <executions>  
+                <execution>  
+                    <id>copy-dependencies</id>  
+                    <phase>package</phase>  
+                    <goals>  
+                        <goal>copy-dependencies</goal>  
+                    </goals>  
+                    <configuration>  
+                        <outputDirectory>${project.build.directory}/lib</outputDirectory>  
+                    </configuration>  
+                </execution>  
+            </executions>  
+        </plugin>  
+        
+        
+        <plugin>  
+            <groupId>org.apache.maven.plugins</groupId>  
+            <artifactId>maven-shade-plugin</artifactId>  
+            <version>2.4.1</version>  
+            <executions>  
+                <execution>  
+                    <phase>package</phase>  
+                    <goals>  
+                        <goal>shade</goal>  
+                    </goals>  
+                    <configuration>  
+                        <transformers>  
+                            <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">  
+                                <mainClass>com.aia.action.MainEngine</mainClass>  
+                            </transformer>  
+                            <transformer implementation="org.apache.maven.plugins.shade.resource.AppendingTransformer">  
+                                <resource>META-INF/spring.handlers</resource>  
+                            </transformer>  
+                            <transformer implementation="org.apache.maven.plugins.shade.resource.AppendingTransformer">  
+                                <resource>META-INF/spring.schemas</resource>  
+                            </transformer>  
+                        </transformers>  
+                    </configuration>  
+                </execution>  
+            </executions>  
+        </plugin>  
+  
+  		            拷贝依赖的jar包到lib目录
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>copy</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>copy-dependencies</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>
+                                ${project.build.directory}/lib
+                            </outputDirectory>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin> -->
+            
+            	<!-- 打jar包必备 -->
 
 		</plugins>
 	</build>
@@ -625,4 +713,7 @@
 		</pluginRepository> <pluginRepository> <id>beardedgeeks-releases</id> <url>http://beardedgeeks.googlecode.com/svn/repository/releases</url> 
 		</pluginRepository> </pluginRepositories> -->
 
+
+
+	
 </project>

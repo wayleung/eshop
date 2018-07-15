@@ -41,7 +41,7 @@
 
 
 	<!-- 静态资源处理 css js imgs -->
-
+	 <mvc:default-servlet-handler/>
 
 	<mvc:resources mapping="/*" location="/" />
 	<!-- <mvc:resources location="/resources/**" mapping="/resources"/> -->
@@ -95,7 +95,7 @@
 	
 		<!-- 跨域 -->
 	
-	<mvc:cors> <mvc:mapping path="/**" /> </mvc:cors>
+	<!-- <mvc:cors> <mvc:mapping path="/**" /> </mvc:cors> -->
 
 
 
